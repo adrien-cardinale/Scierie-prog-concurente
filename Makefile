@@ -1,6 +1,6 @@
 CSRCS=$(wildcard *.cpp)
 COBJS=$(patsubst %.cpp,%.o,$(CSRCS))
-EXEC?=projet
+EXEC?=scierie.out
 
 CC=clang++
 CFLAGS=-std=c++14 -g -Wall -pedantic
