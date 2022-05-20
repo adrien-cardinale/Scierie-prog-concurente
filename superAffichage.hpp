@@ -1,7 +1,10 @@
 #pragma once
 #include "benne.hpp"
 #include <SFML/Graphics.hpp>
+#include <list>
 #include <vector>
+#include <iterator>
+#include <algorithm>
 
 
 class SuperAffichage{
@@ -52,8 +55,8 @@ public:
     void updateTimer(int jours, int heures, int minutes);
     void updateBucheron(int etat);
     void updateOuvrier(int etat);
-    void updateBenneForet(std::vector<std::unique_ptr<Benne>> &parkingBenneVide, std::vector<std::unique_ptr<Benne>> &parkingBennePleine);
-    void updateBenneUsine(std::vector<std::unique_ptr<Benne>> &parkingBenneVide, std::vector<std::unique_ptr<Benne>> &parkingBennePleine);
+    void updateBenneForet(std::list<std::unique_ptr<Benne>> &parkingBenneVide, std::list<std::unique_ptr<Benne>> &parkingBennePleine);
+    void updateBenneUsine(std::list<std::unique_ptr<Benne>> &parkingBenneVide, std::list<std::unique_ptr<Benne>> &parkingBennePleine);
     void updateUsine(int &boisAScier, int &planchAStocker, int &stockPlanche);
     void moveTransporteurForet();
     void moveTransporteurUsine();

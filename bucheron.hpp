@@ -4,10 +4,10 @@
 #include "superTimer.hpp"
 #include <memory>
 #include <thread>
-#include <vector>
+#include <list>
 
 
 class Bucheron{
 public:
-    void CouperDuBois(std::vector<std::unique_ptr<Benne>> &parkingBenneVide, std::vector<std::unique_ptr<Benne>> &parkingBennePlein);
+    void CouperDuBois(std::list<std::unique_ptr<Benne>> &parkingBenneVide, std::list<std::unique_ptr<Benne>> &parkingBennePlein);
 };

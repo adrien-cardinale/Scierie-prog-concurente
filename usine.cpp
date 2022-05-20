@@ -2,8 +2,7 @@
 
 Usine::Usine():ouvrier(), boisAScier(0), planchAStocker(0), stockPlanche(0){
     parkingTransportBenne.push_back(std::make_unique<Benne>(0));
-    parkingTransportBenne.push_back(std::make_unique<Benne>(0));
-    parkingTransportBenne.push_back(std::make_unique<Benne>(0));
+    parkingExtractionBenne.push_back(std::make_unique<Benne>(10));
 }
 
 void Usine::start(){

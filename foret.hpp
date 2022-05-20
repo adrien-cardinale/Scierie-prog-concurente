@@ -1,7 +1,7 @@
 #pragma once
 #include "benne.hpp"
 #include "bucheron.hpp"
-#include <vector>
+#include <list>
 #include <memory>
 #include <thread>
 
@@ -9,8 +9,8 @@ class Foret{
     Bucheron bucheron;
     std::thread threadBucheron;
 protected:
-    std::vector<std::unique_ptr<Benne>> parkingRemplissageBenne;
-    std::vector<std::unique_ptr<Benne>> parkingTransportBenne;
+    std::list<std::unique_ptr<Benne>> parkingRemplissageBenne;
+    std::list<std::unique_ptr<Benne>> parkingTransportBenne;
 public:
     Foret();
     void start();

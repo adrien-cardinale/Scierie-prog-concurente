@@ -2,7 +2,7 @@
 #include "benne.hpp"
 #include "ouvrier.hpp"
 #include <thread>
-#include <vector>
+#include <list>
 #include <memory>
 
 class Usine{
@@ -12,8 +12,8 @@ class Usine{
     int planchAStocker;
     int stockPlanche;
 protected:
-    std::vector<std::unique_ptr<Benne>> parkingExtractionBenne;
-    std::vector<std::unique_ptr<Benne>> parkingTransportBenne;
+    std::list<std::unique_ptr<Benne>> parkingExtractionBenne;
+    std::list<std::unique_ptr<Benne>> parkingTransportBenne;
 public:
     Usine();
     void start();

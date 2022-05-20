@@ -20,8 +20,8 @@ void Transporteur::transporter(){
                 etat = 2;
                 break;
             }case 2:{
-                benne = std::move(parkingTransportUsine.back());
-                parkingTransportUsine.pop_back();
+                benne = std::move(parkingTransportUsine.front());
+                parkingTransportUsine.pop_front();
                 etat = 3;
                 break;
             }case 3:{
@@ -45,8 +45,8 @@ void Transporteur::transporter(){
                 etat = 6;
                 break;
             }case 6:{
-                benne = std::move(parkingTransportForet.back());
-                parkingTransportForet.pop_back();
+                benne = std::move(parkingTransportForet.front());
+                parkingTransportForet.pop_front();
                 etat = 7;
                 break;
             }case 7:{

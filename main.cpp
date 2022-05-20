@@ -12,7 +12,7 @@
 #include <mutex>
 #include <set>
 #include <condition_variable>
-#include <vector>
+#include <list>
 #include <memory>
 
 using namespace std;

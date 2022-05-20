@@ -2,7 +2,7 @@
 
 Ouvrier::Ouvrier():etat(11){}
 
-void Ouvrier::gestion(std::vector<std::unique_ptr<Benne>> &parkingExtractionBenne, std::vector<std::unique_ptr<Benne>> &parkingTransportBenne, 
+void Ouvrier::gestion(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne, 
                         int &boisAScier, int &plancheAStocker, int &stockPlanche){
     int etat = 0;
     SuperAffichage::GetInstance()->updateBenneUsine(std::ref(parkingExtractionBenne), std::ref(parkingTransportBenne));
@@ -55,7 +55,7 @@ void Ouvrier::gestion(std::vector<std::unique_ptr<Benne>> &parkingExtractionBenn
     }
 }
 
-void Ouvrier::viderBenne(std::vector<std::unique_ptr<Benne>> &parkingExtractionBenne,std::vector<std::unique_ptr<Benne>> &parkingTransportBenne, int &boisAScier){
+void Ouvrier::viderBenne(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne,std::list<std::unique_ptr<Benne>> &parkingTransportBenne, int &boisAScier){
     etat = 0;
     while(etat != 11){
         
@@ -66,7 +66,7 @@ void Ouvrier::viderBenne(std::vector<std::unique_ptr<Benne>> &parkingExtractionB
                 break;
             }case 1:{
                 std::this_thread::sleep_for(std::chrono::seconds(1));
-                if(parkingExtractionBenne.back()->getEtat() > 0){
+                if(parkingExtractionBenne.front()->getEtat() > 0){
                     etat = 3;
                 }else{
                     etat = 2;
@@ -74,14 +74,14 @@ void Ouvrier::viderBenne(std::vector<std::unique_ptr<Benne>> &parkingExtractionB
                 break;
             }case 2:{
                 std::this_thread::sleep_for(std::chrono::seconds(1));
-                parkingTransportBenne.push_back(std::move(parkingExtractionBenne.back()));
-                parkingExtractionBenne.pop_back();
+                parkingTransportBenne.push_back(std::move(parkingExtractionBenne.front()));
+                parkingExtractionBenne.pop_front();
                 benneDisponibleTransporteurUsine.notify_one();
                 etat = 11;
                 break;
             }case 3:{
                 std::this_thread::sleep_for(std::chrono::seconds(1));
-                parkingExtractionBenne.back()->viderBenne();
+                parkingExtractionBenne.front()->viderBenne();
                 boisAScier++;
                 etat = 4;
                 break;

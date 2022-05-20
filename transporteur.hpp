@@ -8,13 +8,13 @@
 #include <condition_variable>
 #include <memory>
 #include <thread>
-#include <vector>
+#include <list>
 
 class Transporteur{
-    std::vector<std::unique_ptr<Benne>> &parkingExtractionUsine;
-    std::vector<std::unique_ptr<Benne>> &parkingTransportUsine;
-    std::vector<std::unique_ptr<Benne>> &parkingRemplissageForet;
-    std::vector<std::unique_ptr<Benne>> &parkingTransportForet;
+    std::list<std::unique_ptr<Benne>> &parkingExtractionUsine;
+    std::list<std::unique_ptr<Benne>> &parkingTransportUsine;
+    std::list<std::unique_ptr<Benne>> &parkingRemplissageForet;
+    std::list<std::unique_ptr<Benne>> &parkingTransportForet;
     std::unique_ptr<Benne> benne;
 public:
     Transporteur(Usine &usine, Foret &foret);

@@ -17,7 +17,7 @@ int tempsEcoule;
     int jours;
     int bufferHeures;
 protected:
-    SuperTimer():tempsEcoule(0),heures(0),minutes(0),jours(0){}
+    SuperTimer();
     static SuperTimer* instance;
 public:
     SuperTimer(SuperTimer &other) = delete;

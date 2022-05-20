@@ -55,6 +55,7 @@ SuperAffichage::SuperAffichage(){
         textBenneRemplissageForet[i].setPosition(benneRemplissageForet[i].getPosition().x + 50.f, benneRemplissageForet[i].getPosition().y + 25.f);
         textBenneRemplissageForet[i].setFillColor(sf::Color::Black);
         textBenneRemplissageForet[i].setCharacterSize(20);
+        textBenneRemplissageForet[i].setString("0");
         benneTransportForet.push_back(sf::RectangleShape());
         benneTransportForet[i].setSize(sf::Vector2f(100.f, 50.f));
         benneTransportForet[i].setPosition(150.f, 500.f + i*60.f);
@@ -64,6 +65,7 @@ SuperAffichage::SuperAffichage(){
         textBenneTransportForet[i].setPosition(benneTransportForet[i].getPosition().x + 50.f, benneTransportForet[i].getPosition().y + 25.f);
         textBenneTransportForet[i].setFillColor(sf::Color::Black);
         textBenneTransportForet[i].setCharacterSize(20);
+        textBenneTransportForet[i].setString("0");
     }
     //Benne usine
     for(int i = 0; i < NBR_MAX_BENNE; i++){
@@ -76,6 +78,7 @@ SuperAffichage::SuperAffichage(){
         textBenneExtractionUsine[i].setPosition(benneExtractionUsine[i].getPosition().x + 50.f, benneExtractionUsine[i].getPosition().y + 25.f);
         textBenneExtractionUsine[i].setFillColor(sf::Color::Black);
         textBenneExtractionUsine[i].setCharacterSize(20);
+        textBenneExtractionUsine[i].setString("0");
         benneTransportUsine.push_back(sf::RectangleShape());
         benneTransportUsine[i].setSize(sf::Vector2f(100.f, 50.f));
         benneTransportUsine[i].setPosition(910.f, 500.f + i*60.f);
@@ -85,6 +88,7 @@ SuperAffichage::SuperAffichage(){
         textBenneTransportUsine[i].setPosition(benneTransportUsine[i].getPosition().x + 50.f, benneTransportUsine[i].getPosition().y + 25.f);
         textBenneTransportUsine[i].setFillColor(sf::Color::Black);
         textBenneTransportUsine[i].setCharacterSize(20);
+        textBenneTransportUsine[i].setString("0");
     }
     //affichage usine
     textBoisAScier.setFont(font);
@@ -253,25 +257,33 @@ void SuperAffichage::updateOuvrier(int etat){
     textOuvrier.setCharacterSize(10);
 }
 
-void SuperAffichage::updateBenneForet(std::vector<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::vector<std::unique_ptr<Benne>> &parkingTransportBenne){
+void SuperAffichage::updateBenneForet(std::list<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne){
     nbrBenneRemplissageForet = parkingRemplissageBenne.size();
     nbrBenneTransportForet = parkingTransportBenne.size();
+    std::list<std::unique_ptr<Benne>>::iterator it = parkingRemplissageBenne.begin();
+    std::list<std::unique_ptr<Benne>>::iterator it2 = parkingTransportBenne.begin();
     for(int i = 0; i < nbrBenneRemplissageForet; i++){
-        textBenneRemplissageForet[i].setString(std::to_string(parkingRemplissageBenne[i]->getEtat()));
+        std::advance(it, i);
+        textBenneRemplissageForet[i].setString(std::to_string((*it)->getEtat()));
     }
     for(int i = 0; i < nbrBenneTransportForet; i++){
-        textBenneTransportForet[i].setString(std::to_string(parkingTransportBenne[i]->getEtat()));
+        std::advance(it2, i);
+        textBenneTransportForet[i].setString(std::to_string((*it2)->getEtat()));
     }
 }
 
-void SuperAffichage::updateBenneUsine(std::vector<std::unique_ptr<Benne>> &parkingExtractionBenne, std::vector<std::unique_ptr<Benne>> &parkingTransportBenne){
+void SuperAffichage::updateBenneUsine(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne){
     nbrBenneExtractionUsine = parkingExtractionBenne.size();
     nbrBenneTransportUsine = parkingTransportBenne.size();
+        std::list<std::unique_ptr<Benne>>::iterator it = parkingExtractionBenne.begin();
+    std::list<std::unique_ptr<Benne>>::iterator it2 = parkingTransportBenne.begin();
     for(int i = 0; i < nbrBenneExtractionUsine; i++){
-        textBenneExtractionUsine[i].setString(std::to_string(parkingExtractionBenne[i]->getEtat()));
+        std::advance(it, i);
+        textBenneExtractionUsine[i].setString(std::to_string((*it)->getEtat()));
     }
     for(int i = 0; i < nbrBenneTransportUsine; i++){
-        textBenneTransportUsine[i].setString(std::to_string(parkingTransportBenne[i]->getEtat()));
+        std::advance(it2, i);
+        textBenneTransportUsine[i].setString(std::to_string((*it2)->getEtat()));
     }
 }
 

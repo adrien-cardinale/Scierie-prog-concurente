@@ -1,6 +1,6 @@
 #include "bucheron.hpp"
 
-void Bucheron::CouperDuBois(std::vector<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::vector<std::unique_ptr<Benne>> &parkingTransportBenne){
+void Bucheron::CouperDuBois(std::list<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne){
         int etat = 0;
         SuperTimer* superTimer = SuperTimer::GetInstance();
         SuperAffichage* superAffichage = SuperAffichage::GetInstance();
@@ -33,7 +33,7 @@ void Bucheron::CouperDuBois(std::vector<std::unique_ptr<Benne>> &parkingRempliss
                     break;
                 }case 5:{
                     std::this_thread::sleep_for(std::chrono::seconds(1));
-                    if(parkingRemplissageBenne.back()->getEtat() == 10){
+                    if(parkingRemplissageBenne.front()->getEtat() == 10){
                         etat = 6;
                     }else{
                         etat = 7;
@@ -41,14 +41,14 @@ void Bucheron::CouperDuBois(std::vector<std::unique_ptr<Benne>> &parkingRempliss
                     break;
                 }case 6:{
                     std::this_thread::sleep_for(std::chrono::seconds(1));
-                    parkingTransportBenne.push_back(std::move(parkingRemplissageBenne.back()));
-                    parkingRemplissageBenne.pop_back();
+                    parkingTransportBenne.push_back(std::move(parkingRemplissageBenne.front()));
+                    parkingRemplissageBenne.pop_front();
                     benneDisponibleTransporteurForet.notify_one();
                     etat = 4;
                     break;
                 }case 7:{
                     std::this_thread::sleep_for(std::chrono::seconds(1));
-                    parkingRemplissageBenne.back()->remplirBenne();
+                    parkingRemplissageBenne.front()->remplirBenne();
                     etat = 0;
                     break;
                 }
