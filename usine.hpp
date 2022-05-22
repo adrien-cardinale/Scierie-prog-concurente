@@ -1,22 +1,19 @@
 #pragma once
 #include "benne.hpp"
-#include "ouvrier.hpp"
 #include <thread>
-#include <list>
+#include <deque>
 #include <memory>
 
 class Usine{
-    Ouvrier ouvrier;
-    std::thread threadOuvrier;
-    int boisAScier;
-    int planchAStocker;
-    int stockPlanche;
 protected:
-    std::list<std::unique_ptr<Benne>> parkingExtractionBenne;
-    std::list<std::unique_ptr<Benne>> parkingTransportBenne;
+    int boisAScier;
+    int plancheAStocker;
+    int stockPlanche;
+    std::deque<std::unique_ptr<Benne>> parkingExtractionBenne;
+    std::deque<std::unique_ptr<Benne>> parkingTransportBenne;
 public:
     Usine();
-    void start();
-    void stop();
+    friend class Simulation;
     friend class Transporteur;
+    friend class Ouvrier;
 };

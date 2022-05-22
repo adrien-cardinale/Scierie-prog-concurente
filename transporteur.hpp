@@ -8,13 +8,13 @@
 #include <condition_variable>
 #include <memory>
 #include <thread>
-#include <list>
+#include <deque>
 
 class Transporteur{
-    std::list<std::unique_ptr<Benne>> &parkingExtractionUsine;
-    std::list<std::unique_ptr<Benne>> &parkingTransportUsine;
-    std::list<std::unique_ptr<Benne>> &parkingRemplissageForet;
-    std::list<std::unique_ptr<Benne>> &parkingTransportForet;
+    std::deque<std::unique_ptr<Benne>> &parkingExtractionUsine;
+    std::deque<std::unique_ptr<Benne>> &parkingTransportUsine;
+    std::deque<std::unique_ptr<Benne>> &parkingRemplissageForet;
+    std::deque<std::unique_ptr<Benne>> &parkingTransportForet;
     std::unique_ptr<Benne> benne;
 public:
     Transporteur(Usine &usine, Foret &foret);

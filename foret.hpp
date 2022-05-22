@@ -1,19 +1,16 @@
 #pragma once
 #include "benne.hpp"
-#include "bucheron.hpp"
-#include <list>
+#include <deque>
 #include <memory>
 #include <thread>
 
 class Foret{
-    Bucheron bucheron;
-    std::thread threadBucheron;
 protected:
-    std::list<std::unique_ptr<Benne>> parkingRemplissageBenne;
-    std::list<std::unique_ptr<Benne>> parkingTransportBenne;
+    std::deque<std::unique_ptr<Benne>> parkingRemplissageBenne;
+    std::deque<std::unique_ptr<Benne>> parkingTransportBenne;
 public:
     Foret();
-    void start();
-    void stop();
+    friend class Simulation;
     friend class Transporteur;
+    friend class Bucheron;
 };

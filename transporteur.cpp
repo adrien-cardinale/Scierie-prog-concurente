@@ -1,4 +1,5 @@
 #include "transporteur.hpp"
+#include <iostream>
 
 Transporteur::Transporteur(Usine &usine, Foret &foret): parkingExtractionUsine(usine.parkingExtractionBenne),
     parkingTransportUsine(usine.parkingTransportBenne), parkingRemplissageForet(foret.parkingRemplissageBenne), parkingTransportForet(foret.parkingTransportBenne){};
@@ -8,7 +9,7 @@ void Transporteur::transporter(){
     while(true){
         switch(etat){
             case 0:{
-                if(SuperTimer::GetInstance()->getHeures() > 8 && SuperTimer::GetInstance()->getHeures() < 17){
+                if(SuperTimer::GetInstance()->getHeures() >= 8 && SuperTimer::GetInstance()->getHeures() <= 17){
                     etat = 1;
                 }
                 break;
@@ -20,6 +21,7 @@ void Transporteur::transporter(){
                 etat = 2;
                 break;
             }case 2:{
+                std::this_thread::sleep_for(std::chrono::seconds(1));
                 benne = std::move(parkingTransportUsine.front());
                 parkingTransportUsine.pop_front();
                 etat = 3;
@@ -35,9 +37,11 @@ void Transporteur::transporter(){
             }case 4:{
                 parkingRemplissageForet.push_back(std::move(benne));
                 benneDisponibleBucheron.notify_one();
+                
                 etat = 5;
                 break;
             }case 5:{
+                
                 std::unique_lock<std::mutex> lock(m);
                 if(parkingTransportForet.empty()){
                     benneDisponibleTransporteurForet.wait(lock);
@@ -45,6 +49,7 @@ void Transporteur::transporter(){
                 etat = 6;
                 break;
             }case 6:{
+                std::this_thread::sleep_for(std::chrono::seconds(1));
                 benne = std::move(parkingTransportForet.front());
                 parkingTransportForet.pop_front();
                 etat = 7;

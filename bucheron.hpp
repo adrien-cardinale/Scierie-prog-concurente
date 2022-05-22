@@ -2,12 +2,13 @@
 #include "benne.hpp"
 #include "superAffichage.hpp"
 #include "superTimer.hpp"
+#include "foret.hpp"
 #include <memory>
 #include <thread>
-#include <list>
+#include <vector>
 
 
 class Bucheron{
 public:
-    void CouperDuBois(std::list<std::unique_ptr<Benne>> &parkingBenneVide, std::list<std::unique_ptr<Benne>> &parkingBennePlein);
+    void CouperDuBois(Foret &foret);
 };

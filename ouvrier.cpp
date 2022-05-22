@@ -2,10 +2,9 @@
 
 Ouvrier::Ouvrier():etat(11){}
 
-void Ouvrier::gestion(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne, 
-                        int &boisAScier, int &plancheAStocker, int &stockPlanche){
+void Ouvrier::gestion(Usine &usine){
     int etat = 0;
-    SuperAffichage::GetInstance()->updateBenneUsine(std::ref(parkingExtractionBenne), std::ref(parkingTransportBenne));
+    SuperAffichage::GetInstance()->updateBenneUsine(std::ref(usine.parkingExtractionBenne), std::ref(usine.parkingTransportBenne));
     while(true){
         switch(etat){
             case 0:{
@@ -14,51 +13,50 @@ void Ouvrier::gestion(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne,
                 }
                 break;
             }case 1:{
-                if(!parkingExtractionBenne.empty()){ 
+                if(!usine.parkingExtractionBenne.empty()){ 
                     etat = 2;
                 }else{
                     etat = 3;
                 }
                 break;
             }case 2:{
-                std::thread threadViderBenne(&Ouvrier::viderBenne, this, std::ref(parkingExtractionBenne),std::ref(parkingTransportBenne), std::ref(boisAScier));
+                std::thread threadViderBenne(&Ouvrier::viderBenne, this, std::ref(usine.parkingExtractionBenne),std::ref(usine.parkingTransportBenne), std::ref(usine.boisAScier));
                 threadViderBenne.join();
                 etat = 0;
                 break;
             }case 3:{
-                if(boisAScier <= 0){
+                if(usine.boisAScier <= 0){
                     etat = 5;
                 }else{
                     etat = 4;
                 }
                 break;
             }case 4:{
-                std::thread threadScier(&Ouvrier::scier, this, std::ref(boisAScier), std::ref(plancheAStocker));
+                std::thread threadScier(&Ouvrier::scier, this, std::ref(usine.boisAScier), std::ref(usine.plancheAStocker));
                 threadScier.join();
                 etat = 0;
                 break;
             }case 5:{
-                if(plancheAStocker <= 0){
+                if(usine.plancheAStocker <= 0){
                     etat = 0;
                 }else{
                     etat = 6;
                 }
                 break;
             }case 6:{
-                std::thread threadStocker(&Ouvrier::stocker, this, std::ref(plancheAStocker), std::ref(stockPlanche));
+                std::thread threadStocker(&Ouvrier::stocker, this, std::ref(usine.plancheAStocker), std::ref(usine.stockPlanche));
                 threadStocker.join();
                 etat = 0;
                 break;
             }
         }
-         SuperAffichage::GetInstance()->updateUsine(std::ref(boisAScier), std::ref(plancheAStocker), std::ref(stockPlanche));
+         SuperAffichage::GetInstance()->updateUsine(std::ref(usine.boisAScier), std::ref(usine.plancheAStocker), std::ref(usine.stockPlanche));
     }
 }
 
-void Ouvrier::viderBenne(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne,std::list<std::unique_ptr<Benne>> &parkingTransportBenne, int &boisAScier){
+void Ouvrier::viderBenne(std::deque<std::unique_ptr<Benne>> &parkingExtractionBenne,std::deque<std::unique_ptr<Benne>> &parkingTransportBenne, int &boisAScier){
     etat = 0;
     while(etat != 11){
-        
         switch(etat){
             case 0:{
                 std::this_thread::sleep_for(std::chrono::seconds(1));

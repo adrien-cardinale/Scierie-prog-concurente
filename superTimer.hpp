@@ -11,7 +11,7 @@ extern std::condition_variable benneDisponibleTransporteurUsine;
 extern std::condition_variable benneDisponibleExtraction;
 
 class SuperTimer{
-int tempsEcoule;
+    int tempsEcoule;
     int heures;
     int minutes;
     int jours;

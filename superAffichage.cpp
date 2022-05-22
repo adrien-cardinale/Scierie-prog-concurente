@@ -257,33 +257,25 @@ void SuperAffichage::updateOuvrier(int etat){
     textOuvrier.setCharacterSize(10);
 }
 
-void SuperAffichage::updateBenneForet(std::list<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne){
+void SuperAffichage::updateBenneForet(std::deque<std::unique_ptr<Benne>> &parkingRemplissageBenne, std::deque<std::unique_ptr<Benne>> &parkingTransportBenne){
     nbrBenneRemplissageForet = parkingRemplissageBenne.size();
     nbrBenneTransportForet = parkingTransportBenne.size();
-    std::list<std::unique_ptr<Benne>>::iterator it = parkingRemplissageBenne.begin();
-    std::list<std::unique_ptr<Benne>>::iterator it2 = parkingTransportBenne.begin();
     for(int i = 0; i < nbrBenneRemplissageForet; i++){
-        std::advance(it, i);
-        textBenneRemplissageForet[i].setString(std::to_string((*it)->getEtat()));
+        textBenneRemplissageForet[i].setString(std::to_string(parkingRemplissageBenne.at(i)->getEtat()));
     }
     for(int i = 0; i < nbrBenneTransportForet; i++){
-        std::advance(it2, i);
-        textBenneTransportForet[i].setString(std::to_string((*it2)->getEtat()));
+        textBenneTransportForet[i].setString(std::to_string(parkingTransportBenne.at(i)->getEtat()));
     }
 }
 
-void SuperAffichage::updateBenneUsine(std::list<std::unique_ptr<Benne>> &parkingExtractionBenne, std::list<std::unique_ptr<Benne>> &parkingTransportBenne){
+void SuperAffichage::updateBenneUsine(std::deque<std::unique_ptr<Benne>> &parkingExtractionBenne, std::deque<std::unique_ptr<Benne>> &parkingTransportBenne){
     nbrBenneExtractionUsine = parkingExtractionBenne.size();
     nbrBenneTransportUsine = parkingTransportBenne.size();
-        std::list<std::unique_ptr<Benne>>::iterator it = parkingExtractionBenne.begin();
-    std::list<std::unique_ptr<Benne>>::iterator it2 = parkingTransportBenne.begin();
     for(int i = 0; i < nbrBenneExtractionUsine; i++){
-        std::advance(it, i);
-        textBenneExtractionUsine[i].setString(std::to_string((*it)->getEtat()));
+        textBenneExtractionUsine[i].setString(std::to_string(parkingExtractionBenne.at(i)->getEtat()));
     }
     for(int i = 0; i < nbrBenneTransportUsine; i++){
-        std::advance(it2, i);
-        textBenneTransportUsine[i].setString(std::to_string((*it2)->getEtat()));
+        textBenneTransportUsine[i].setString(std::to_string(parkingTransportBenne.at(i)->getEtat()));
     }
 }
 
